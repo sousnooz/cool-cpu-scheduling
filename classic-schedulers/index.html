@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CPU Scheduling Simulator</title>
+    <link rel="stylesheet" href="/classic-schedulers/style.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header>
+      <nav
+        class="navbar navbar-light bg-light d-flex justify-content-between align-items-center"
+      >
+        <span class="navbar-text">
+          CPU Scheduling Simulator (Classic Algorithms)
+        </span>
+        <a
+          href="/combined-scheduler/index.html"
+          class="btn btn-secondary btn-sm"
+        >
+          Go to Combined Algorithm
+        </a>
+      </nav>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container mt-3">
+      <div class="row mb-3">
+        <!-- Process List -->
+        <div class="col-9">
+          <table class="table table-bordered" id="tblProcessList">
+            <thead>
+              <tr>
+                <th>Process ID</th>
+                <th>Arrival Time</th>
+                <th>Burst Time</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+
+          <!-- Process Input Fields -->
+          <div class="row">
+            <div class="col">
+              <input
+                id="processID"
+                class="form-control"
+                type="number"
+                min="0"
+                placeholder="Process ID"
+              />
+            </div>
+            <div class="col">
+              <input
+                id="arrivalTime"
+                class="form-control"
+                type="number"
+                min="0"
+                placeholder="Arrival Time"
+              />
+            </div>
+            <div class="col">
+              <input
+                id="burstTime"
+                class="form-control"
+                type="number"
+                min="0"
+                placeholder="Burst Time"
+              />
+            </div>
+            <div class="col">
+              <button id="btnAddProcess" class="btn btn-primary">
+                Add Process
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Parameters Box -->
+        <div class="col-3 border border-primary p-3">
+          <div class="form-group">
+            <label for="algorithmSelector">Select Scheduling Method</label>
+            <select id="algorithmSelector" class="form-control">
+              <option value="optFCFS">First Come First Served</option>
+              <option value="optSJF">Shortest Job First</option>
+              <option value="optSRTF">Shortest Remaining Time First</option>
+              <option value="optRR">Round Robin</option>
+            </select>
+          </div>
+
+          <div class="form-group form-group-time-quantum">
+            <label>Time Quantum:</label>
+            <input
+              id="timeQuantum"
+              class="form-control"
+              type="number"
+              min="1"
+              max="10"
+            />
+          </div>
+
+          <button id="btnCalculate" class="btn btn-primary btn-block">
+            Show Entire Solution
+          </button>
+          <button id="btnStepByStep" class="btn btn-secondary btn-block">
+            Step-by-Step
+          </button>
+
+          <!-- Step-by-step simulation control -->
+          <div id="nextBtnWrapper" style="display: none" class="mt-2">
+            <button id="btnNextTime" class="btn btn-info btn-block">
+              Next Time Unit
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gantt Chart Container -->
+      <div id="ganttChart" class="gantt-container"></div>
+
+      <!-- Results Table -->
+      <div class="row mt-3">
+        <div class="col-9">
+          <table class="table table-bordered" id="tblResults">
+            <thead>
+              <tr>
+                <th>Process ID</th>
+                <th>Arrival Time</th>
+                <th>Burst Time</th>
+                <th>Completed Time</th>
+                <th>Waiting Time</th>
+                <th>Turnaround Time</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <!-- Results Summary -->
+        <div class="col-3 border border-primary p-3">
+          <div class="form-group">
+            <label>Average Turnaround Time</label>
+            <input id="avgTurnaroundTime" class="form-control" disabled />
+          </div>
+          <div class="form-group">
+            <label>Average Waiting Time</label>
+            <input id="avgWaitingTime" class="form-control" disabled />
+          </div>
+          <div class="form-group">
+            <label>Throughput</label>
+            <input id="throughput" class="form-control" disabled />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="page-footer bg-light p-2 mt-5">
+      <div class="footer-copyright text-center py-3">
+        <span>
+          <b>OS LECTURE PROJECT PRESENTATION</b>
+          SUBMITTED BY ESCANILLA | FALLER | HARUN | RODIL
+        </span>
+      </div>
+    </footer>
+
+    <script>
+      document
+        .getElementById("btnCalculate")
+        .addEventListener("click", function () {
+          // Show the Next Time Unit button after Calculate is clicked
+          document.getElementById("nextBtnWrapper").style.display = "block";
+        });
+    </script>
+    <script src="/classic-schedulers/app.js" type="text/javascript"></script>
+  </body>
+</html>
